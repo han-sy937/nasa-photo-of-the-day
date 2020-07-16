@@ -1,32 +1,66 @@
-import React, {useState, useEffect} from "react"
-import axios from 'axios'
-import Oneimage from './Oneimage'
+import React from "react"
+import styled from 'styled-components'
 
-const Allimages = () => {
+const StyleImages = styled.div`
+// border: 1px solid red;
+background-color: #D4D7E0;
+width: 100%;
+// height: 100vh;
+margin: 0 auto;
+padding: 5%;
 
-    const [imageCards, setImageCards] = useState([])
-    // console.log (imageCards)
-  
-    useEffect(() => {
-      axios.get('https://api.nasa.gov/planetary/apod?api_key=rNwT3O4VbhwFIWLiHfyiRjcCDrLQnph6NYMCDbG0')
-        .then(res => {
-        //   console.log(res)
-          setImageCards(res.data)
-        })
-        .catch(err => {
-          console.log("the data was not returned")
-        })
-    }, [])
+.img{
+  margin: 0 auto;
+}
+
+
+h3{
+  font-family: 'Roboto', serif;
+  font-size: 3.2rem;
+  color: #EB910A;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+.explanation{
+  margin: 0 auto;
+  width: 70%;
+  font-family: 'Roboto', serif;
+  font-size: 1.2rem;
+  color: #362A51;
+  line-height: 1.9rem;
+}
+
+.details{
+  font-family: 'Roboto', serif;
+  font-size: 1.8rem;
+  color: #362A51;
+}
+
+`
+
+const Allimages = props => {
+  const {imageCards} = props
+    console.log(imageCards)
+    
 
     return (
         
-<div className="imageCard">
-    <Oneimage
-        imageCards={imageCards}
-    />
-    
-    </div>
-                )
+    <StyleImages className="image-list">
+      <div className="image">
+      <img src={imageCards.url} alt="Nasa Images"/>
+      </div>
+      
+      <h3>Title: {imageCards.title}</h3>
+        <div className="details">
+          <p>Date: {imageCards.date}</p>
+          <p>Version: {imageCards['service_version']}</p>
+        </div>
+      <p className="explanation">Explanation: {imageCards.explanation}</p>
+        
+    </StyleImages>
+                
+    )
 }
 
 export default Allimages;
